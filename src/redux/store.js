@@ -1,8 +1,14 @@
-const redux = require("redux");
-const { default: todoReducer } = require("./reducers/todoReducer");
+
+const { configureStore } = require("@reduxjs/toolkit");
+const x = require("./reducers/todoReducer");
 
 module.exports.initialState= {
-    todos:[]
+    todos:[{text:'1', comppleted:false}]
 }
-const store=redux.createStore(todoReducer);
+console.log(x.default);
+const store=configureStore({
+    reducer:{
+        suretodo:x.default
+    }
+});
 module.exports.store = store;

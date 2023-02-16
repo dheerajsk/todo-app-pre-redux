@@ -1,38 +1,37 @@
 
-import { initialState } from "../store";
-import { actions } from "../actions";
+// import { initialState } from "../store";
+import { createSlice } from "@reduxjs/toolkit";
 
-function todoReducer(state=initialState, action){
-    console.log("s");
-    switch(action.type){
-        case actions.ADD_TODO:
-            return {
-                ...state,
-                todos:[
-                    ...state.todos,
-                    {
-                        text:action.text,
-                        completed: false
-                    }
-                ]
-            }
-        case actions.TOGGLE_TODO:
-            console.log(action);
-            return {
-                ...state,
-                todos:[
-                    ...state.todos.map((todo,i)=>{
-                        if(i==action.index){
-                            todo.completed=!todo.completed
-                            return todo;
-                        }
-                        return todo;
-                    })
-                ]
-            }
-        default:
-            return state;
-    }
+const initialState= {
+    todos:[{text:'1', comppleted:false}]
 }
 
-export default todoReducer;
+const todoSlice = createSlice(
+{
+    name:'MyTODOReducer',
+    initialState,
+    reducers:{
+        add:(state, action)=>{
+            console.log(action.payload);
+            state.todos.push({
+                text:action.payload,
+                completed:false});
+        },
+        toggle:(state,action)=>{
+            state.todos.map((todo,i)=>{
+                if(i==action.payload){
+                    todo.completed=!todo.completed;
+                }
+                return todo;
+            })
+        }
+    }
+}  
+);
+
+export default todoSlice.reducer;
+export const todoSelector = (state)=> {
+    console.log(state);
+    return state.suretodo.todos;
+};
+export const actions = todoSlice.actions;
